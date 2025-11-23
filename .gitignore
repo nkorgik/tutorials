@@ -30,7 +30,7 @@ build/
 dist/
 develop-eggs/
 .eggs/
-parts/
+
 sdist/
 wheels/
 *.egg-info/
