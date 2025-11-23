@@ -111,6 +111,38 @@ function App() {
                     </button>
                 </div>
             </div>
+            {/* Security Level Indicator (Horizontal) */}
+            <div className="fixed bottom-8 left-8 hidden xl:flex flex-col gap-3 items-start">
+                <div className="flex items-center gap-3">
+                    <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                        Security Level
+                    </span>
+                    <motion.div
+                        key={currentStep}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className={`text-sm font-bold ${currentStep === 0 ? 'text-red-400' :
+                                currentStep === 1 ? 'text-orange-400' :
+                                    currentStep === 2 ? 'text-purple-400' :
+                                        'text-emerald-400'
+                            }`}
+                    >
+                        {currentStep === 0 ? 'NONE' :
+                            currentStep === 1 ? 'LOW' :
+                                currentStep === 2 ? 'MEDIUM' :
+                                    'HIGH'}
+                    </motion.div>
+                </div>
+                <div className="w-64 h-3 bg-slate-800 rounded-full relative overflow-hidden">
+                    <motion.div
+                        className="absolute top-0 left-0 h-full rounded-full bg-gradient-to-r from-red-500 via-yellow-500 to-emerald-500"
+                        initial={false}
+                        animate={{ width: `${(currentStep + 1) * 25}%` }}
+                        transition={{ duration: 0.8, type: "spring" }}
+                    />
+                </div>
+            </div>
+
             {/* Decorative SVG */}
             <div className="absolute bottom-0 right-0 pointer-events-none opacity-20">
                 <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
