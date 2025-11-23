@@ -14,7 +14,8 @@ const AuthDemo = ({
     isLoggedIn,
     responseData,
     error,
-    token
+    token,
+    onLogout
 }) => {
     const [credentials, setCredentials] = useState({});
     const [loading, setLoading] = useState(false);
@@ -98,13 +99,25 @@ const AuthDemo = ({
                             </div>
                         )}
 
-                        <button
-                            onClick={handleFetch}
-                            disabled={loading}
-                            className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2 rounded-lg transition-colors flex items-center justify-center gap-2"
-                        >
-                            {loading ? 'Fetching...' : 'Fetch Protected Data'}
-                        </button>
+                        <div className="grid grid-cols-2 gap-3">
+                            <button
+                                onClick={handleFetch}
+                                disabled={loading}
+                                className="bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2 rounded-lg transition-colors flex items-center justify-center gap-2"
+                            >
+                                {loading ? 'Fetching...' : 'Fetch Data'}
+                            </button>
+
+                            {onLogout && (
+                                <button
+                                    onClick={onLogout}
+                                    disabled={loading}
+                                    className="bg-red-600 hover:bg-red-500 text-white font-medium py-2 rounded-lg transition-colors flex items-center justify-center gap-2"
+                                >
+                                    Revoke Token
+                                </button>
+                            )}
+                        </div>
                     </div>
                 )}
 

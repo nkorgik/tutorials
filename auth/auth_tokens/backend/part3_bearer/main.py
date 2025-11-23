@@ -14,7 +14,7 @@ from database import get_user, create_user
 app = FastAPI()
 security = HTTPBearer()
 
-# In-memory token storage for simplicity
+# In-memory token storage for simplicity. IN real life - database
 # token -> username
 TOKENS = {}
 
@@ -40,6 +40,13 @@ def login(data: LoginRequest):
     token = str(uuid.uuid4())
     TOKENS[token] = data.username
     return {"access_token": token, "token_type": "bearer"}
+
+@app.post("/logout")
+def logout(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    token = credentials.credentials
+    if token in TOKENS:
+        del TOKENS[token]
+    return {"message": "Token revoked", "status": "success"}
 
 def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     token = credentials.credentials

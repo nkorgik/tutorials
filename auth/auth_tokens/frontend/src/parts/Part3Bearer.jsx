@@ -18,6 +18,21 @@ const Part3Bearer = () => {
         }
     };
 
+    const handleLogout = async () => {
+        try {
+            setError(null);
+            await axios.post('http://localhost:8003/logout', {}, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            // We DO NOT clear the token here, so the user can try to fetch again
+            // and see that the token is now invalid (demonstrating the revocation).
+            setData(null);
+            setError("Token revoked on server. Try fetching data now to see it fail!");
+        } catch (err) {
+            setError("Logout failed: " + (err.response?.data?.detail || err.message));
+        }
+    };
+
     const handleFetch = async () => {
         try {
             setError(null);
@@ -38,6 +53,7 @@ const Part3Bearer = () => {
             color="border-purple-500"
             onLogin={handleLogin}
             onFetch={handleFetch}
+            onLogout={handleLogout}
             requiresLogin={true}
             isLoggedIn={!!token}
             token={token}
