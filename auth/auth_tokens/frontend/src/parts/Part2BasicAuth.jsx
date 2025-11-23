@@ -59,7 +59,7 @@ const Part2BasicAuth = () => {
             requiresLogin={true}
             isLoggedIn={!!creds}
             loginFields={[
-                { name: 'username', label: 'Username', type: 'text', placeholder: 'user' },
+                { name: 'username', label: 'Username', type: 'text', placeholder: 'basic_user' },
                 { name: 'password', label: 'Password', type: 'password', placeholder: 'password' }
             ]}
             responseData={data}

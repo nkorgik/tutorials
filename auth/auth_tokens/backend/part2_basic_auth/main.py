@@ -22,8 +22,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Create a demo user for testing
-create_user("user", "password") # In real app, hash this!
+from passlib.context import CryptContext
+
+# Switching to pbkdf2_sha256 to avoid compatibility issues between passlib and newer bcrypt versions
+pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
+
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
+
+def get_password_hash(password):
+    return pwd_context.hash(password)
+
+# Create a demo user for testing with HASHED password
+# Note: In a real app, you wouldn't hash it on startup every time if it exists, 
+# but create_user handles "if exists" check.
+# We need to make sure we don't overwrite the existing "user" with a different hash format if it was already created.
+# For this tutorial, let's just create a new user "user_hashed" or update the existing one if we could.
+create_user("basic_user", get_password_hash("password"))
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
     user = get_user(credentials.username)
@@ -34,14 +49,8 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
             headers={"WWW-Authenticate": "Basic"},
         )
     
-    # Simple password check (plaintext for this part, or simple comparison)
-    # In this part, we just compare plaintext for simplicity of "Basic Auth" concept
-    # But since database.py stores "password_hash", let's assume we stored plaintext there for Part 2
-    # OR we can just hardcode the check here for the tutorial flow.
-    
-    # Let's use the DB value.
-    correct_password = user["password_hash"] 
-    if not secrets.compare_digest(credentials.password, correct_password):
+    correct_password_hash = user["password_hash"] 
+    if not verify_password(credentials.password, correct_password_hash):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",

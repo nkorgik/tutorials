@@ -110,3 +110,6 @@ storybook-static/
 *.key
 *.crt
 *.pid
+
+# ---- DB ----
+*.db
