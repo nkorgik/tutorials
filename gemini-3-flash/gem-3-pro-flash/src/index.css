@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --color-tg-bg: #0f0f0f;
+  --color-tg-sidebar: #17212b;
+  --color-tg-chat: #0e1621;
+  --color-tg-bubble-user: #2b5278;
+  --color-tg-bubble-contact: #182533;
+  --color-tg-text: #e4ecf2;
+  --color-tg-accent: #5288c1;
+  --color-tg-muted: #708499;
+
+  --font-inter: "Inter", system-ui, sans-serif;
+  --font-roboto: "Roboto", system-ui, sans-serif;
+}
+
+:root {
+  font-family: var(--font-inter);
+  color-scheme: dark;
+  background-color: var(--color-tg-bg);
+  color: var(--color-tg-text);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Custom scrollbar for Telegram look */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
