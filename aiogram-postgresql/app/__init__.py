@@ -1,0 +1,1 @@
+"""Financial tracking bot package."""

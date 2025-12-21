@@ -1,0 +1,19 @@
+[project]
+name = "aiogram-postgresql"
+version = "0.1.0"
+description = "Telegram financial tracker bot powered by aiogram 3 and PostgreSQL"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "aiogram>=3.7.0,<4.0.0",
+    "asyncpg>=0.29.0",
+    "python-dotenv>=1.0.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
